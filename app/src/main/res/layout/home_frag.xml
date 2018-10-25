@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@android:color/holo_orange_light"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/title_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="@string/hometitle"
+            android:textSize="20sp"
+            android:textColor="@android:color/black"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="230dp"
+        android:padding="10dp">
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:padding="5dp"
+        android:gravity="center"
+        android:background="@drawable/shape2"
+        android:orientation="horizontal">
+
+      <TextView
+          android:id="@+id/imagetitle"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text=""
+          android:gravity="center"
+          android:textColor="@android:color/white"/>
+        <LinearLayout
+            android:id="@+id/dotcontainer"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
+        </LinearLayout>
+    </LinearLayout>
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_marginHorizontal="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_domestic"
+            style="@style/btn_style"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/domesticnews"
+            android:text="@string/btn_domes"
+            android:textSize="15sp"/>
+
+        <Button
+            android:id="@+id/interational"
+            style="@style/btn_style"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/international"
+            android:text="@string/btn_inter"
+            android:textSize="15sp"/>
+
+        <Button
+            android:id="@+id/military"
+            style="@style/btn_style"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/military"
+            android:text="@string/btn_mil"
+            android:textSize="15sp"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:orientation="horizontal"
+        android:layout_marginHorizontal="10dp">
+
+        <Button
+            android:id="@+id/culture"
+            style="@style/btn_style"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/culture"
+            android:text="@string/btn_cul"
+            android:textSize="15sp"/>
+
+        <Button
+            android:id="@+id/economics"
+            style="@style/btn_style"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/economics"
+            android:text="@string/btn_eco"
+            android:textSize="15sp"/>
+
+        <Button
+            android:id="@+id/technology"
+            style="@style/btn_style"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/tech"
+            android:text="@string/btn_tech"
+            android:textSize="15sp"/>
+
+    </LinearLayout>
+</LinearLayout>
