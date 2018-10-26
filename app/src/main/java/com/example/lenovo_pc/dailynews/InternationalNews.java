@@ -1,7 +1,9 @@
 package com.example.lenovo_pc.dailynews;
 
+import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
@@ -29,17 +31,22 @@ import java.util.List;
 
 public class InternationalNews extends AppCompatActivity implements Runnable {
     private ArrayList<HashMap<String, String>> listItems; // 存放文字、图片信息
-    private SimpleAdapter listItemAdapter;
-    private LayoutInflater inflater;
-    //   private int msgWhat = 7;
     private Handler handler;
     private TextView tv;
     private ListView listView;
     private String data[]={"正在加载中......  "};
+    private String todayStr;
+    private String resource;
+    private PatternMatch match;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.originalpage);
+        match=new PatternMatch();
+        SharedPreferences sharedPreferences = getSharedPreferences("date", Activity.MODE_PRIVATE);
+        resource = sharedPreferences.getString("resource","");
+//        SharedPreferences sharedPreferences = getSharedPreferences("date", Activity.MODE_PRIVATE);
+//        todayStr = sharedPreferences.getString("today_date","");
         tv=(TextView)findViewById(R.id.title_page);
         tv.setText("国际新闻");
         ListAdapter adapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,data);
@@ -52,8 +59,13 @@ public class InternationalNews extends AppCompatActivity implements Runnable {
             @Override
             public void handleMessage(Message msg) {
                 if(msg.what == 5){
-                    List<String> retList = (List<String>) msg.obj;
-                    ListAdapter adapter = new ArrayAdapter<String>(InternationalNews.this,R.layout.support_simple_spinner_dropdown_item,retList);
+//                    List<String> retList = (List<String>) msg.obj;
+//                    ListAdapter adapter = new ArrayAdapter<String>(InternationalNews.this,R.layout.support_simple_spinner_dropdown_item,retList);
+                    List<HashMap<String, String>> retList = (List<HashMap<String, String>>) msg.obj;
+                    SimpleAdapter adapter = new SimpleAdapter(InternationalNews.this, retList, // listItems数据源
+                            R.layout.list_item, // ListItem的XML布局实现
+                            new String[] { "ItemTitle", "ItemOrigin","ItemResource" },
+                            new int[] { R.id.itemTitle, R.id.itemOrigin ,R.id.itemResource});
                     listView.setAdapter(adapter);
                     Log.i("handler","reset list...");
                 }
@@ -61,6 +73,7 @@ public class InternationalNews extends AppCompatActivity implements Runnable {
             }
         };
     }
+
     public void back(View btn){
         Intent home = new Intent(this, MainActivity.class);
         startActivity(home);
@@ -69,24 +82,32 @@ public class InternationalNews extends AppCompatActivity implements Runnable {
     @Override
     public void run() {//线程
         try {
-            Thread.sleep(2000);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         Log.i("thread","run.....");
-        List<String> rateList = new ArrayList<String>();
+        List<HashMap<String, String>> rateList = new ArrayList<HashMap<String, String>>();
         try {
-            Document doc = Jsoup.connect("http://www.usd-cny.com/icbc.htm").get();
-            Elements tbs = doc.getElementsByClass("tableDataTable");
-            Element table = tbs.get(0);
-            Elements tds = table.getElementsByTag("td");
-            for (int i = 0; i < tds.size(); i+=5) {
-                Element td = tds.get(i);
-                Element td2 = tds.get(i+3);
-                String tdStr = td.text();
-                String pStr = td2.text();
-                rateList.add(tdStr + "=>" + pStr);
-                Log.i("td",tdStr + "=>" + pStr);
+            Document doc = Jsoup.connect("https://news.sina.com.cn/world").get();
+            Elements titles = doc.select(".content .blk122 a");
+            for (int i = 0; i < titles.size(); i+=1) {
+                Element newstitle = titles.get(i);
+                String titleStr = newstitle.text();
+                String linkStr = newstitle.attr("href");
+                if(titleStr.length()<1)
+                    continue;
+                HashMap<String, String> map = new HashMap<String, String>();
+                int index=match.matchPattern(linkStr);
+                if(index==-1)
+                    todayStr="null";
+                else
+                    todayStr=linkStr.substring(index,index+10);
+                map.put("ItemTitle", titleStr);  //标题
+                map.put("ItemOrigin", todayStr);  //日期
+                map.put("ItemLink", linkStr);  //存储链接
+                map.put("ItemResource",resource);
+                rateList.add(map);
             }
         } catch (MalformedURLException e) {
             Log.e("www", e.toString());
@@ -100,4 +121,4 @@ public class InternationalNews extends AppCompatActivity implements Runnable {
         handler.sendMessage(msg);
         Log.i("thread","sendMessage.....");
     }
-    }
+}

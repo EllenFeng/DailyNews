@@ -59,13 +59,27 @@ public class HomeFragment extends Fragment{
                 startActivity(mil);
             }
         });
-//        b4.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent i4 = new Intent(getActivity(), ContactUsActivity.class);
-//                startActivity(i4);
-//            }
-//        });
+        b4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent cul = new Intent(getActivity(), CulturalNews.class);
+                startActivity(cul);
+            }
+        });
+        b5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent eco = new Intent(getActivity(), EconomicNews.class);
+                startActivity(eco);
+            }
+        });
+        b6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent tech = new Intent(getActivity(), TechNews.class);
+                startActivity(tech);
+            }
+        });
 
     }
 

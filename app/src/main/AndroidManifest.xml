@@ -11,7 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,7 +22,10 @@
         </activity>
         <activity android:name=".DomesticNews" />
         <activity android:name=".InternationalNews" />
-        <activity android:name=".MilitaryNews"></activity>
+        <activity android:name=".MilitaryNews" />
+        <activity android:name=".CulturalNews" />
+        <activity android:name=".EconomicNews" />
+        <activity android:name=".TechNews"></activity>
     </application>
 
 </manifest>

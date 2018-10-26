@@ -7,14 +7,29 @@
         android:id="@+id/itemTitle"
         android:layout_height="wrap_content"
         android:textSize="20sp"
-        android:text="@string/btn_home"
+        android:textColor="@android:color/black"
+        android:text=""
         android:layout_width="fill_parent"/>
-    <TextView
-        android:id="@+id/itemOrigin"
-        android:layout_height="wrap_content"
-        android:gravity="end"
-        android:textSize="15sp"
-        android:text="@string/btn_col"
-        android:layout_width="fill_parent"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/itemOrigin"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:gravity="start"
+            android:textColor="@android:color/darker_gray"
+            android:text=""
+            android:layout_width="fill_parent"/>
+        <TextView
+            android:id="@+id/itemResource"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:gravity="end"
+            android:textColor="@android:color/darker_gray"
+            android:text=""
+            android:layout_width="fill_parent"/>
+    </RelativeLayout>
+
 
 </LinearLayout>
