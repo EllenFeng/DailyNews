@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -32,7 +33,7 @@ public class EconomicNews extends AppCompatActivity implements Runnable{
     private TextView tv;
     private ListView listView;
     private String data[]={"正在加载中......  "};
-    private String todayStr;
+    private String dateStr;
     private String resource;
     private PatternMatch match;
 
@@ -62,14 +63,32 @@ public class EconomicNews extends AppCompatActivity implements Runnable{
                     List<HashMap<String, String>> retList = (List<HashMap<String, String>>) msg.obj;
                     SimpleAdapter adapter = new SimpleAdapter(EconomicNews.this, retList, // listItems数据源
                             R.layout.list_item, // ListItem的XML布局实现
-                            new String[] { "ItemTitle", "ItemOrigin","ItemResource" },
-                            new int[] { R.id.itemTitle, R.id.itemOrigin,R.id.itemResource });
+                            new String[] { "ItemTitle", "ItemOrigin","ItemResource","ItemLink" },
+                            new int[] { R.id.itemTitle, R.id.itemOrigin,R.id.itemResource , R.id.itemLink});
                     listView.setAdapter(adapter);
                     Log.i("handler","reset list...");
                 }
                 super.handleMessage(msg);
             }
         };
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                TextView title = (TextView) view.findViewById(R.id.itemTitle);
+                String title2 = String.valueOf(title.getText());
+                TextView link = (TextView) view.findViewById(R.id.itemLink);
+                String link2 = String.valueOf(link.getText());
+                TextView date = (TextView) view.findViewById(R.id.itemOrigin);
+                String date2 = String.valueOf(date.getText());
+                Intent intent = new Intent();
+                intent.setClass(EconomicNews.this,NewsContent.class);
+                intent.putExtra("title",title2);
+                intent.putExtra("link",link2);
+                intent.putExtra("date",date2);
+                startActivity(intent);
+
+            }
+        });
     }
 
     public void back(View btn){
@@ -99,11 +118,11 @@ public class EconomicNews extends AppCompatActivity implements Runnable{
                 HashMap<String, String> map = new HashMap<String, String>();
                 int index=match.matchPattern(linkStr);
                 if(index==-1)
-                    todayStr="null";
+                    dateStr="null";
                 else
-                    todayStr=linkStr.substring(index,index+10);
+                    dateStr=linkStr.substring(index,index+10);
                 map.put("ItemTitle", titleStr);  //标题
-                map.put("ItemOrigin", todayStr);  //日期
+                map.put("ItemOrigin", dateStr);  //日期
                 map.put("ItemLink", linkStr);  //存储链接
                 map.put("ItemResource",resource);
                 rateList.add(map);
@@ -117,11 +136,11 @@ public class EconomicNews extends AppCompatActivity implements Runnable{
                 HashMap<String, String> map = new HashMap<String, String>();
                 int index=match.matchPattern(linkStr);
                 if(index==-1)
-                    todayStr="null";
+                    dateStr="null";
                 else
-                    todayStr=linkStr.substring(index,index+10);
+                    dateStr=linkStr.substring(index,index+10);
                 map.put("ItemTitle", titleStr);  //标题
-                map.put("ItemOrigin", todayStr);  //日期
+                map.put("ItemOrigin", dateStr);  //日期
                 map.put("ItemLink", linkStr);  //存储链接
                 map.put("ItemResource",resource);
                 rateList.add(map);

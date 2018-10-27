@@ -20,12 +20,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DomesticNews" />
-        <activity android:name=".InternationalNews" />
-        <activity android:name=".MilitaryNews" />
-        <activity android:name=".CulturalNews" />
-        <activity android:name=".EconomicNews" />
-        <activity android:name=".TechNews"></activity>
+        <activity android:name=".DomesticNews"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".InternationalNews"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".MilitaryNews"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".CulturalNews"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".EconomicNews"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".TechNews"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".NewsContent"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

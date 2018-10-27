@@ -22,6 +22,14 @@
             android:text=""
             android:layout_width="fill_parent"/>
         <TextView
+            android:id="@+id/itemLink"
+            android:layout_height="wrap_content"
+            android:textSize="1sp"
+            android:gravity="center"
+            android:textColor="@android:color/transparent"
+            android:text=""
+            android:layout_width="fill_parent"/>
+        <TextView
             android:id="@+id/itemResource"
             android:layout_height="wrap_content"
             android:textSize="15sp"

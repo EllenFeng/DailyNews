@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -33,7 +34,7 @@ public class TechNews extends AppCompatActivity implements Runnable{
     private TextView tv;
     private ListView listView;
     private String data[]={"正在加载中......  "};
-    private String todayStr;
+    private String dateStr;
     private String resource;
     private PatternMatch match;
 
@@ -63,14 +64,32 @@ public class TechNews extends AppCompatActivity implements Runnable{
                     List<HashMap<String, String>> retList = (List<HashMap<String, String>>) msg.obj;
                     SimpleAdapter adapter = new SimpleAdapter(TechNews.this, retList, // listItems数据源
                             R.layout.list_item, // ListItem的XML布局实现
-                            new String[] { "ItemTitle", "ItemOrigin","ItemResource" },
-                            new int[] { R.id.itemTitle, R.id.itemOrigin,R.id.itemResource });
+                            new String[] { "ItemTitle", "ItemOrigin","ItemResource","ItemLink" },
+                            new int[] { R.id.itemTitle, R.id.itemOrigin,R.id.itemResource, R.id.itemLink });
                     listView.setAdapter(adapter);
                     Log.i("handler","reset list...");
                 }
                 super.handleMessage(msg);
             }
         };
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                TextView title = (TextView) view.findViewById(R.id.itemTitle);
+                String title2 = String.valueOf(title.getText());
+                TextView link = (TextView) view.findViewById(R.id.itemLink);
+                String link2 = String.valueOf(link.getText());
+                TextView date = (TextView) view.findViewById(R.id.itemOrigin);
+                String date2 = String.valueOf(date.getText());
+                Intent intent = new Intent();
+                intent.setClass(TechNews.this,NewsContent.class);
+                intent.putExtra("title",title2);
+                intent.putExtra("link",link2);
+                intent.putExtra("date",date2);
+                startActivity(intent);
+
+            }
+        });
     }
 
     public void back(View btn){
@@ -90,8 +109,7 @@ public class TechNews extends AppCompatActivity implements Runnable{
         try {
             Document doc = Jsoup.connect("https://tech.sina.com.cn").get();
             Elements titles = doc.select(".tech-news a");
-            Elements titles1 = doc.select(".tech-right-box .item a");
-            Elements titles2 = doc.select(".tech-right-box .rank-con a");
+            Elements titles1 = doc.select(".tech-right-box .rank-con li a");
             for (int i = 0; i < titles.size(); i+=1) {
                 Element newstitle = titles.get(i);
                 String titleStr = newstitle.text();
@@ -101,11 +119,11 @@ public class TechNews extends AppCompatActivity implements Runnable{
                 HashMap<String, String> map = new HashMap<String, String>();
                 int index=match.matchPattern(linkStr);
                 if(index==-1)
-                    todayStr="null";
+                    dateStr="null";
                 else
-                    todayStr=linkStr.substring(index,index+10);
+                    dateStr=linkStr.substring(index,index+10);
                 map.put("ItemTitle", titleStr);  //标题
-                map.put("ItemOrigin", todayStr);  //日期
+                map.put("ItemOrigin", dateStr);  //日期
                 map.put("ItemLink", linkStr);  //存储链接
                 map.put("ItemResource",resource);
                 rateList.add(map);
@@ -114,36 +132,18 @@ public class TechNews extends AppCompatActivity implements Runnable{
                 Element newstitle = titles1.get(i);
                 String titleStr = newstitle.text();
                 String linkStr = newstitle.attr("href");
-                if(titleStr.length()<1)
+                if (titleStr.length() < 1)
                     continue;
                 HashMap<String, String> map = new HashMap<String, String>();
-                int index=match.matchPattern(linkStr);
-                if(index==-1)
-                    todayStr="null";
+                int index = match.matchPattern(linkStr);
+                if (index == -1)
+                    dateStr = "null";
                 else
-                    todayStr=linkStr.substring(index,index+10);
+                    dateStr = linkStr.substring(index, index + 10);
                 map.put("ItemTitle", titleStr);  //标题
-                map.put("ItemOrigin", todayStr);  //日期
+                map.put("ItemOrigin", dateStr);  //日期
                 map.put("ItemLink", linkStr);  //存储链接
-                map.put("ItemResource",resource);
-                rateList.add(map);
-            }
-            for (int i = 0; i < titles2.size(); i+=1) {
-                Element newstitle = titles2.get(i);
-                String titleStr = newstitle.text();
-                String linkStr = newstitle.attr("href");
-                if(titleStr.length()<1)
-                    continue;
-                HashMap<String, String> map = new HashMap<String, String>();
-                int index=match.matchPattern(linkStr);
-                if(index==-1)
-                    todayStr="null";
-                else
-                    todayStr=linkStr.substring(index,index+10);
-                map.put("ItemTitle", titleStr);  //标题
-                map.put("ItemOrigin", todayStr);  //日期
-                map.put("ItemLink", linkStr);  //存储链接
-                map.put("ItemResource",resource);
+                map.put("ItemResource", resource);
                 rateList.add(map);
             }
         } catch (MalformedURLException e) {

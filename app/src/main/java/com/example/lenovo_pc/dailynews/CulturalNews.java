@@ -1,6 +1,8 @@
 package com.example.lenovo_pc.dailynews;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
@@ -9,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -27,13 +30,15 @@ import java.util.HashMap;
 import java.util.List;
 import com.example.lenovo_pc.dailynews.PatternMatch;
 
-public class CulturalNews extends AppCompatActivity implements Runnable{
+public class CulturalNews extends AppCompatActivity implements Runnable,AdapterView.OnItemLongClickListener{
     private ArrayList<HashMap<String, String>> listItems; // 存放文字、图片信息
+    private List<HashMap<String, String>> retList;
+    private SimpleAdapter adapter1;
     private Handler handler;
     private TextView tv;
     private ListView listView;
     private String data[]={"正在加载中......  "};
-    private String todayStr;
+    private String dateStr;
     private String resource;
     private PatternMatch match;
     @Override
@@ -59,17 +64,38 @@ public class CulturalNews extends AppCompatActivity implements Runnable{
                 if(msg.what == 5){
 //                    List<String> retList = (List<String>) msg.obj;
 //                    ListAdapter adapter = new ArrayAdapter<String>(InternationalNews.this,R.layout.support_simple_spinner_dropdown_item,retList);
-                    List<HashMap<String, String>> retList = (List<HashMap<String, String>>) msg.obj;
-                    SimpleAdapter adapter = new SimpleAdapter(CulturalNews.this, retList, // listItems数据源
+                    retList = (List<HashMap<String, String>>) msg.obj;
+                    adapter1 = new SimpleAdapter(CulturalNews.this, retList, // listItems数据源
                             R.layout.list_item, // ListItem的XML布局实现
-                            new String[] { "ItemTitle", "ItemOrigin","ItemResource" },
-                            new int[] { R.id.itemTitle, R.id.itemOrigin,R.id.itemResource });
-                    listView.setAdapter(adapter);
+                            new String[] { "ItemTitle", "ItemOrigin","ItemResource","ItemLink" },
+                            new int[] { R.id.itemTitle, R.id.itemOrigin,R.id.itemResource, R.id.itemLink });
+                    listView.setAdapter(adapter1);
                     Log.i("handler","reset list...");
                 }
                 super.handleMessage(msg);
             }
         };
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                TextView title = (TextView) view.findViewById(R.id.itemTitle);
+                String title2 = String.valueOf(title.getText());
+                TextView link = (TextView) view.findViewById(R.id.itemLink);
+                String link2 = String.valueOf(link.getText());
+                TextView date = (TextView) view.findViewById(R.id.itemOrigin);
+                String date2 = String.valueOf(date.getText());
+                Intent intent = new Intent();
+                intent.setClass(CulturalNews.this,NewsContent.class);
+                intent.putExtra("title",title2);
+                intent.putExtra("link",link2);
+                intent.putExtra("date",date2);
+                startActivity(intent);
+
+            }
+        });
+        listView.setOnItemLongClickListener(this);
+
+
     }
 
     public void back(View btn){
@@ -99,11 +125,11 @@ public class CulturalNews extends AppCompatActivity implements Runnable{
                 HashMap<String, String> map = new HashMap<String, String>();
                 int index=match.matchPattern(linkStr);
                 if(index==-1)
-                    todayStr="null";
+                    dateStr="null";
                 else
-                    todayStr=linkStr.substring(index,index+10);
+                    dateStr=linkStr.substring(index,index+10);
                 map.put("ItemTitle", titleStr);  //标题
-                map.put("ItemOrigin", todayStr);  //日期
+                map.put("ItemOrigin", dateStr);  //日期
                 map.put("ItemLink", linkStr);  //存储链接
                 map.put("ItemResource",resource);
                 rateList.add(map);
@@ -117,11 +143,11 @@ public class CulturalNews extends AppCompatActivity implements Runnable{
                 HashMap<String, String> map = new HashMap<String, String>();
                 int index=match.matchPattern(linkStr);
                 if(index==-1)
-                    todayStr="null";
+                    dateStr="null";
                 else
-                    todayStr=linkStr.substring(index,index+10);
+                    dateStr=linkStr.substring(index,index+10);
                 map.put("ItemTitle", titleStr);  //标题
-                map.put("ItemOrigin", todayStr);  //日期
+                map.put("ItemOrigin", dateStr);  //日期
                 map.put("ItemLink", linkStr);  //存储链接
                 map.put("ItemResource",resource);
                 rateList.add(map);
@@ -137,5 +163,20 @@ public class CulturalNews extends AppCompatActivity implements Runnable{
         msg.obj = rateList;
         handler.sendMessage(msg);
         Log.i("thread","sendMessage.....");
+    }
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+        Log.i("","longclick");
+        AlertDialog.Builder builder=new AlertDialog.Builder(this);
+        builder.setTitle("提示").setMessage("确认是否要删除当前数据：").setPositiveButton("是", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                retList.remove(position);
+                adapter1.notifyDataSetChanged();
+            }
+        }).setNegativeButton("否",null);
+        builder.create().show();
+
+        return true;
     }
 }

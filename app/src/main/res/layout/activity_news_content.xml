@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".NewsContent">
+    <RelativeLayout
+        android:id="@+id/newstitlebar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@android:color/holo_orange_light">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:layout_centerVertical="true"
+            android:text="@string/newstitle"
+            android:layout_marginStart="130dp"
+            android:textColor="@android:color/black"
+            android:textSize="22sp" />
+        <Button
+            android:id="@+id/btn_newsmark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:text="@string/mark_title"
+            android:layout_marginStart="300dp"
+            android:onClick="mark_news"/>
+
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/newstitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text=""
+        android:textColor="@android:color/black"
+        android:gravity="center"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginHorizontal="10dp"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/newscontent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text=""
+            android:textColor="@android:color/black"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="6dp"/>
+    </ScrollView>
+
+
+</LinearLayout>

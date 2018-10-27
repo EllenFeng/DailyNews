@@ -7,10 +7,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class MarkFragment extends Fragment{
-
+    private ListView lv;
 
     public static MarkFragment newInstance(){
         MarkFragment newFragment = new MarkFragment();
@@ -22,4 +23,10 @@ public class MarkFragment extends Fragment{
         return view;
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        lv=(ListView) getView().findViewById(R.id.marklist);
+        lv.setEmptyView((TextView)getView().findViewById(R.id.nomark));
+    }
 }

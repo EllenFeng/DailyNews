@@ -12,4 +12,7 @@
     <string name="btn_tech">科技</string>
     <string name="mark_title">收藏</string>
     <string name="sel_title">关注</string>
+    <string name="newstitle">新浪新闻</string>
+    <string name="nomark">您还没有收藏记录哟</string>
+    <string name="news_mark">收藏</string>
 </resources>
