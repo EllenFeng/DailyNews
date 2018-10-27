@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -67,7 +68,15 @@ public class NewsContent extends AppCompatActivity implements Runnable{
     public void mark_news(View btn){
         SharedPreferences sharedPreferences = getSharedPreferences("date", Activity.MODE_PRIVATE);
         todayStr = sharedPreferences.getString("today_date","");
-        
+        NewsItem item1=new NewsItem(title,link,originaldate,todayStr);
+        DBManager_detail manager=new DBManager_detail(this);
+    //    manager.deleteAll();
+        if(!manager.isExisted(title)) {  //如果没有收藏过
+            manager.add(item1);
+            Toast.makeText(this,"收藏成功！",Toast.LENGTH_SHORT).show();
+        }
+        else
+            Toast.makeText(this,"已经在收藏夹啦！",Toast.LENGTH_SHORT).show();
     }
     @Override
     public void run() {

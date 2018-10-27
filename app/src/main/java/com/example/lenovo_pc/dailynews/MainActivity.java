@@ -3,6 +3,8 @@ package com.example.lenovo_pc.dailynews;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.nfc.Tag;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -12,18 +14,32 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends FragmentActivity {
     private Button b1;
     private Button b2;
     private Button b3;
+    private ListView lv;
+    private Handler handler;
     private HomeFragment h1;
     private MarkFragment h2;
     private SelectFragment h3;
+    private SimpleAdapter adapter1;
   //  private HomeFragment cur;
     public static FragmentManager fm;
 
@@ -99,7 +115,6 @@ public class MainActivity extends FragmentActivity {
         }
     }
 
-
     public void onClick(View btn) {
         b1.setBackgroundResource(R.drawable.shape3);
         b2.setBackgroundResource(R.drawable.shape3);
@@ -141,4 +156,5 @@ public class MainActivity extends FragmentActivity {
             transaction.hide(h3);
         }
     }
+
 }

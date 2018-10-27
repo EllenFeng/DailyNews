@@ -30,7 +30,7 @@ import java.util.HashMap;
 import java.util.List;
 import com.example.lenovo_pc.dailynews.PatternMatch;
 
-public class CulturalNews extends AppCompatActivity implements Runnable,AdapterView.OnItemLongClickListener{
+public class CulturalNews extends AppCompatActivity implements Runnable{
     private ArrayList<HashMap<String, String>> listItems; // 存放文字、图片信息
     private List<HashMap<String, String>> retList;
     private SimpleAdapter adapter1;
@@ -93,7 +93,6 @@ public class CulturalNews extends AppCompatActivity implements Runnable,AdapterV
 
             }
         });
-        listView.setOnItemLongClickListener(this);
 
 
     }
@@ -164,19 +163,5 @@ public class CulturalNews extends AppCompatActivity implements Runnable,AdapterV
         handler.sendMessage(msg);
         Log.i("thread","sendMessage.....");
     }
-    @Override
-    public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-        Log.i("","longclick");
-        AlertDialog.Builder builder=new AlertDialog.Builder(this);
-        builder.setTitle("提示").setMessage("确认是否要删除当前数据：").setPositiveButton("是", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                retList.remove(position);
-                adapter1.notifyDataSetChanged();
-            }
-        }).setNegativeButton("否",null);
-        builder.create().show();
 
-        return true;
-    }
 }

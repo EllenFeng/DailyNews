@@ -2,7 +2,7 @@
     <string name="app_name">Daily News</string>
     <string name="btn_home">首页</string>
     <string name="btn_col">收藏</string>
-    <string name="btn_sel">关注</string>
+    <string name="btn_sel">信息</string>
     <string name="hometitle">首页</string>
     <string name="btn_domes">国内</string>
     <string name="btn_inter">国际</string>
@@ -11,8 +11,15 @@
     <string name="btn_eco">财经</string>
     <string name="btn_tech">科技</string>
     <string name="mark_title">收藏</string>
-    <string name="sel_title">关注</string>
+    <string name="sel_title">信息</string>
     <string name="newstitle">新浪新闻</string>
-    <string name="nomark">您还没有收藏记录哟</string>
+    <string name="nomark">点击详情看看呢~</string>
     <string name="news_mark">收藏</string>
+    <string name="btn_refresh">详情</string>
+    <string name="title_activity_mark">MarkActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="info">  本应用每一次进入新闻列表时能自动获取网页上的最新新闻，并显示新闻发布时间。\n\n点击新闻标题可以进入详情界面查看新闻具体内容，详情界面可以选择将该新闻加入收藏夹，若已经收藏过，会进行提示。\n\n在收藏界面可以点击进入详情界面查看收藏夹，收藏夹会显示已经收藏过的新闻，包括新闻发布时间和收藏时间。点击标题可以查看新闻详情，长按标题可以删除该收藏。\n\n冯瑞婉 \n西南财经大学  \n2018年10月28日</string>
+    <string name="app_name_cn">每日新闻(Daily News)</string>
 </resources>
