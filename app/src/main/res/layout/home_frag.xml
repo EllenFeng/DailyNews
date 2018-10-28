@@ -24,10 +24,11 @@
         android:layout_width="match_parent"
         android:layout_height="230dp"
         android:padding="10dp">
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewpager"
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:paddingHorizontal="16dp"
+        android:background="@drawable/newsimage"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -42,16 +43,10 @@
           android:id="@+id/imagetitle"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:text=""
+          android:text="@string/appname"
           android:gravity="center"
-          android:textColor="@android:color/white"/>
-        <LinearLayout
-            android:id="@+id/dotcontainer"
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp">
-        </LinearLayout>
+          android:textColor="@android:color/black"/>
+
     </LinearLayout>
     </RelativeLayout>
     <LinearLayout

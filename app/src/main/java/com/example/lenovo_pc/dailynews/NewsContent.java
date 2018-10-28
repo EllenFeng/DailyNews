@@ -70,10 +70,13 @@ public class NewsContent extends AppCompatActivity implements Runnable{
         todayStr = sharedPreferences.getString("today_date","");
         NewsItem item1=new NewsItem(title,link,originaldate,todayStr);
         DBManager_detail manager=new DBManager_detail(this);
-    //    manager.deleteAll();
         if(!manager.isExisted(title)) {  //如果没有收藏过
-            manager.add(item1);
-            Toast.makeText(this,"收藏成功！",Toast.LENGTH_SHORT).show();
+            if(manager.countExceeded()==1)
+                Toast.makeText(this,"收藏太多了哟，请前往收藏夹进行清理！",Toast.LENGTH_SHORT).show();
+            else{
+                manager.add(item1);
+                Toast.makeText(this,"收藏成功！",Toast.LENGTH_SHORT).show();
+            }
         }
         else
             Toast.makeText(this,"已经在收藏夹啦！",Toast.LENGTH_SHORT).show();

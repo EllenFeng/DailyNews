@@ -50,6 +50,14 @@ public class DBManager_detail {
         else
             return true;
     }
+    public int countExceeded(){
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.query(TBNAME,null,null,null,null,null,null,null);
+        if(cursor.getCount()>9)  //添加超过10条
+            return 1;
+        else
+            return 0;
+    }
     public List<NewsItem> listAll(){
         List<NewsItem> newsdetail = null;
         SQLiteDatabase db = dbHelper.getReadableDatabase();

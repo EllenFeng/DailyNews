@@ -14,11 +14,6 @@
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".DomesticNews"
@@ -41,7 +36,18 @@
         <activity
             android:name=".NewsContent"
             android:screenOrientation="portrait" />
-        <activity android:name=".MarkActivity"></activity>
+        <activity
+            android:name=".MarkActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".Splash"
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
