@@ -35,6 +35,7 @@ public class NewsContent extends AppCompatActivity implements Runnable{
     private String todayStr;  //当前日期，用于收藏时使用
     private TextView tv,tv2;
     private Handler handler;
+    private String data = "请稍后......  ";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +45,7 @@ public class NewsContent extends AppCompatActivity implements Runnable{
         originaldate = getIntent().getStringExtra("date");  //新闻发布日期
         tv=(TextView)findViewById(R.id.newstitle);
         tv2=(TextView)findViewById(R.id.newscontent);
-        tv.setText(title);
+        tv.setText(data);
         int msgWhat = 3;
         Thread t = new Thread(NewsContent.this);
         t.start();
@@ -55,10 +56,14 @@ public class NewsContent extends AppCompatActivity implements Runnable{
 //                    List<String> content = (List<String>) msg.obj;
 //                    tv2.setText((CharSequence) content);
                     String str = (String) msg.obj;
-                    if(str.length()<1)
-                        tv2.setText("哎呀，你要找的文章不见啦！");
-                    else
+                    if(str.length()<1){
+                        tv.setText("哎呀，你要找的文章不见啦！");
+                    }
+                    else{
+                        tv.setText(title);
                         tv2.setText(str);
+                    }
+
                 }
                 super.handleMessage(msg);
             }
@@ -83,6 +88,12 @@ public class NewsContent extends AppCompatActivity implements Runnable{
     }
     @Override
     public void run() {
+        Log.i("thread", "run.....");
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         Log.i("thread","run.....");
 //        List<String> constr = new ArrayList<String>();
         String content1="";

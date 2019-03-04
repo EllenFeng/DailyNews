@@ -28,7 +28,6 @@ import java.util.HashMap;
 import java.util.List;
 
 public class EconomicNews extends AppCompatActivity implements Runnable{
-    private ArrayList<HashMap<String, String>> listItems; // 存放文字、图片信息
     private Handler handler;
     private TextView tv;
     private ListView listView;
@@ -76,17 +75,18 @@ public class EconomicNews extends AppCompatActivity implements Runnable{
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 TextView title = (TextView) view.findViewById(R.id.itemTitle);
                 String title2 = String.valueOf(title.getText());
-                TextView link = (TextView) view.findViewById(R.id.itemLink);
-                String link2 = String.valueOf(link.getText());
+                HashMap<String,String> map = (HashMap<String, String>)listView.getItemAtPosition(position);
+                String links=map.get("ItemLink");
+//                TextView link = (TextView) view.findViewById(R.id.itemLink);
+//                String link2 = String.valueOf(link.getText());
                 TextView date = (TextView) view.findViewById(R.id.itemOrigin);
                 String date2 = String.valueOf(date.getText());
                 Intent intent = new Intent();
                 intent.setClass(EconomicNews.this,NewsContent.class);
                 intent.putExtra("title",title2);
-                intent.putExtra("link",link2);
+                intent.putExtra("link",links);
                 intent.putExtra("date",date2);
                 startActivity(intent);
-
             }
         });
     }

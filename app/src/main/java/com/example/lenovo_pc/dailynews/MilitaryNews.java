@@ -75,16 +75,18 @@ public class MilitaryNews extends AppCompatActivity implements Runnable {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                HashMap<String,String> map = (HashMap<String, String>)listView.getItemAtPosition(position);
+                String links=map.get("ItemLink");
                 TextView title = (TextView) view.findViewById(R.id.itemTitle);
                 String title2 = String.valueOf(title.getText());
-                TextView link = (TextView) view.findViewById(R.id.itemLink);
-                String link2 = String.valueOf(link.getText());
+//                TextView link = (TextView) view.findViewById(R.id.itemLink);
+//                String link2 = String.valueOf(link.getText());
                 TextView date = (TextView) view.findViewById(R.id.itemOrigin);
                 String date2 = String.valueOf(date.getText());
                 Intent intent = new Intent();
                 intent.setClass(MilitaryNews.this,NewsContent.class);
                 intent.putExtra("title",title2);
-                intent.putExtra("link",link2);
+                intent.putExtra("link",links);
                 intent.putExtra("date",date2);
                 startActivity(intent);
 
